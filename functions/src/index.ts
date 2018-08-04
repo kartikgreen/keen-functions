@@ -7,10 +7,6 @@ const client = new KeenTracking({
 
 export const onNewEventsCreate = functions.database.ref('/job-queue/{id}').onCreate(async (snapshot, context) => {
     const data = await snapshot.val();
-    const newData = {
-        customer: data.customer.name.toUpperCase()
-    }
-    console.log('here is your new data',newData);
       client.recordEvent('purchases', data, (err, res) => {
         if (err) {
           // Handle error
@@ -20,5 +16,4 @@ export const onNewEventsCreate = functions.database.ref('/job-queue/{id}').onCre
           console.log('Here is the response', res);
         }
       });
-    // return snapshot.ref.update({name: data.customer.name.toUpperCase()})
 })
